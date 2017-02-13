@@ -1,0 +1,6 @@
+# Additional items for debughelper GUI form.
+
+default:dirt_with_grass
+default:water_source
+default:river_water_source
+default:lava_source
