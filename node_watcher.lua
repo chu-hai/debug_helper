@@ -197,12 +197,12 @@ minetest.register_abm({
 
 			local result = ""
 			local tm = t_meta:to_table()
- 			for _, v in ipairs(tbl.parents) do
+			for _, v in ipairs(tbl.parents) do
 				if not tm[v] then
 					break
 				end
- 				tm = tm[v]
- 			end
+				tm = tm[v]
+			end
 
 			if tm then
 				local data = tm[tbl.name]
@@ -225,7 +225,7 @@ minetest.register_abm({
 			return
 		end
 
- 		local cnt = meta:get_int("counter") + 1
+		local cnt = meta:get_int("counter") + 1
 		local receiver = meta:get_string("msg_receiver")
 
 		local data = minetest.deserialize(meta:get_string("selected_data_cache"))
@@ -239,8 +239,8 @@ minetest.register_abm({
 		local t_meta = minetest.get_meta(t_pos)
 		local msg = ("Counter:%d [%s]"):format(cnt, read_target_metadata(t_meta, data))
 		debug_helper.send_message(receiver, msg, debug_helper.MSG_COLOR.INFO)
- 		meta:set_int("counter", cnt)
- 		update_infotext(pos, meta)
+		meta:set_int("counter", cnt)
+		update_infotext(pos, meta)
 	end
 })
 
@@ -271,7 +271,7 @@ minetest.register_node("debug_helper:node_watcher", {
 	on_rotate = screwdriver.disallow,
 	after_place_node = after_place_node,
 	on_rightclick = on_rightclick,
- 	on_punch = on_punch,
+	on_punch = on_punch,
 })
 
 debug_helper.itemlist_register_item("debug_helper:node_watcher")

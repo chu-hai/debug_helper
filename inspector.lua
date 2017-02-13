@@ -99,7 +99,7 @@ local function convert_table(tbl, tree_level, inventory_mode)
 		local line = ""
 		if type(v) == "table" then
 			line = line .. ("%d,%s,%s,%s"):format(tree_level, parent_color, k, inventory_mode and #v .. " slot(s)" or "")
- 			local sub_tree = convert_table(v, tree_level + 1, (k == "inventory") and true or inventory_mode)
+			local sub_tree = convert_table(v, tree_level + 1, (k == "inventory") and true or inventory_mode)
 			line = line .. ("%s%s"):format(#sub_tree ~= 0 and "," or "", sub_tree)
 		else
 			if inventory_mode then
@@ -160,9 +160,9 @@ local function create_formspec_for_node(playername, data)
 	local details = ""
 	local formspec_name = formspec_prefix
 	local detail_idx = data.detail_type_idx[data.target_type]
- 	for _, v in ipairs(detail_types[target_types.NODE]) do
- 		details = details .. ("%s%s"):format(#details ~= 0 and "," or "", v)
- 	end
+	for _, v in ipairs(detail_types[target_types.NODE]) do
+		details = details .. ("%s%s"):format(#details ~= 0 and "," or "", v)
+	end
 	formspec = formspec ..
 		"dropdown[0.2,2.5;3;detail_type;" .. details .. ";" .. detail_idx .. "]" ..
 		"tablecolumns[tree;color,span=1;text,width=7;text]" ..
@@ -208,9 +208,9 @@ local function create_formspec_for_object(playername, data)
 	local details = ""
 	local formspec_name = formspec_prefix
 	local detail_idx = data.detail_type_idx[data.target_type]
- 	for _, v in ipairs(detail_types[target_types.OBJECT]) do
- 		details = details .. ("%s%s"):format(#details ~= 0 and "," or "", v)
- 	end
+	for _, v in ipairs(detail_types[target_types.OBJECT]) do
+		details = details .. ("%s%s"):format(#details ~= 0 and "," or "", v)
+	end
 	formspec = formspec ..
 		"dropdown[0.2,0.7;3;detail_type;" .. details .. ";" .. detail_idx .. "]" ..
 		"tablecolumns[tree;color,span=1;text,width=7;text]" ..
@@ -226,17 +226,17 @@ local function create_formspec_for_object(playername, data)
 		-- object method table
 		table["getpos()"] = obj:getpos()
 		table["get_hp()"] = obj:get_hp()
- 		table["get_inventory()"] = obj:get_inventory()
- 		table["get_wield_list()"] = obj:get_wield_list()
- 		table["get_wield_index()"] = obj:get_wield_index()
- 		table["get_armor_groups()"] = obj:get_armor_groups()
- 		table["get_animation()"] = obj:get_animation()
- 		table["get_attach()"] = obj:get_attach()
- 		table["is_player()"] = obj:is_player()
- 		table["get_nametag_attributes()"] = obj:get_nametag_attributes()
- 		table["getvelocity()"] = obj:getvelocity()
- 		table["getacceleration()"] = obj:getacceleration()
- 		table["getyaw()"] = obj:getyaw()
+		table["get_inventory()"] = obj:get_inventory()
+		table["get_wield_list()"] = obj:get_wield_list()
+		table["get_wield_index()"] = obj:get_wield_index()
+		table["get_armor_groups()"] = obj:get_armor_groups()
+		table["get_animation()"] = obj:get_animation()
+		table["get_attach()"] = obj:get_attach()
+		table["is_player()"] = obj:is_player()
+		table["get_nametag_attributes()"] = obj:get_nametag_attributes()
+		table["getvelocity()"] = obj:getvelocity()
+		table["getacceleration()"] = obj:getacceleration()
+		table["getyaw()"] = obj:getyaw()
 		formspec_name = formspec_name .. "object_methods"
 	else
 		-- object property table

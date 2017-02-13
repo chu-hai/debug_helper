@@ -60,8 +60,8 @@ local function create_formspec(player_name, item_idx)
 		"button[9,1;1,0.8;giveme_99;+99]" ..
 
 		"tablecolumns[color,span=1;text;text]" ..
- 		"tableoptions[color=#e0e0e0;highlight_text=#f0f0f0;background=#303030;highlight=#404040]" ..
- 		"table[0,2;9.8,3.5;itemlist;" .. lines .. ";" .. item_idx .. "]" ..
+		"tableoptions[color=#e0e0e0;highlight_text=#f0f0f0;background=#303030;highlight=#404040]" ..
+		"table[0,2;9.8,3.5;itemlist;" .. lines .. ";" .. item_idx .. "]" ..
 
 		"button_exit[8,5.62;2.02,0.8;exit;Exit]"
 
@@ -99,8 +99,8 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			end
 		end
 		count = tonumber(count)
- 		if count and count > 0 then
-  			local p_inv = player:get_inventory()
+		if count and count > 0 then
+			local p_inv = player:get_inventory()
 			local item_name = selected_items[playername]
 			if item_name ~= "" then
 				local item_max = minetest.registered_items[item_name].stack_max or 99
@@ -109,7 +109,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 				local stack = ItemStack({name = selected_items[playername], count = add_cnt})
 
 				if p_inv:room_for_item("main", stack) then
-		  			p_inv:add_item("main", stack)
+					p_inv:add_item("main", stack)
 					debug_helper.send_message(player:get_player_name(),
 											 ("[%s] add %s item(s) to inventory."):format(item_name, add_cnt),
 											 debug_helper.MSG_COLOR.INFO)
@@ -119,7 +119,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 											 debug_helper.MSG_COLOR.WARN)
 				end
 			end
- 		end
+		end
 	end
 end)
 
