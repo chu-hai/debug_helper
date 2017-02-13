@@ -28,6 +28,8 @@ end
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 local worldpath = minetest.get_worldpath()
 dofile(modpath .. "/debug_helper_gui.lua")
+dofile(modpath .. "/inspector.lua")
+dofile(modpath .. "/node_watcher.lua")
 
 minetest.after(1, function()
 	local function register_itemfile(filename)
