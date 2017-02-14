@@ -33,6 +33,9 @@ dofile(modpath .. "/node_watcher.lua")
 if minetest.get_modpath("mesecons") then
 	dofile(modpath .. "/mesecon_signal_checker.lua")
 end
+if minetest.get_modpath("digilines") then
+	dofile(modpath .. "/digilines_logger.lua")
+end
 
 minetest.after(1, function()
 	local function register_itemfile(filename)
