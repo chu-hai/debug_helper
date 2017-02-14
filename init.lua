@@ -30,6 +30,9 @@ local worldpath = minetest.get_worldpath()
 dofile(modpath .. "/debug_helper_gui.lua")
 dofile(modpath .. "/inspector.lua")
 dofile(modpath .. "/node_watcher.lua")
+if minetest.get_modpath("mesecons") then
+	dofile(modpath .. "/mesecon_signal_checker.lua")
+end
 
 minetest.after(1, function()
 	local function register_itemfile(filename)
