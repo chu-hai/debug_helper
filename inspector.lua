@@ -143,13 +143,18 @@ local function create_formspec_for_node(playername, data)
 		"box[0,0.65;1,1;#202020]" ..
 		"item_image[0.1,0.7;1,1;" .. node.name .. "]"
 
-	-- Node data(pos, name, param, param2, light)
+	-- Node data(pos, name, param, param2, light, timer)
 	local line = "#c0c0ff,Position," .. minetest.formspec_escape(minetest.pos_to_string(data.pos))
 	for k, v in sorted_pairs(node) do
 		line = line .. (",#c0c0ff,%s,%s"):format(k, v)
 	end
 	local light = minetest.get_node_light(data.pos)
 	line = line .. (",#c0c0ff,%s,%s"):format("Light Level", light)
+
+	local timer = minetest.get_node_timer(data.pos)
+	line = line .. (",#c0c0ff,%s,%s"):format("Timer.timeout", timer:get_timeout())
+	line = line .. (",#c0c0ff,%s,%s"):format("Timer.elapsed", timer:get_elapsed())
+	line = line .. (",#c0c0ff,%s,%s"):format("Timer.is_started", timer:is_started())
 
 	formspec = formspec ..
 		"tablecolumns[color,span=1;text,width=7.5;text]" ..
