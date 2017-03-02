@@ -320,7 +320,6 @@ end)
 minetest.register_tool("debug_helper:inspector", {
 	description = "Inspector",
 	inventory_image = "debug_helper_inspector.png",
-	stack_max = 1,
 	on_use = function(itemstack, user, pointed_thing)
 		local playername = user:get_player_name()
 		if pointed_thing.type == "node" then
