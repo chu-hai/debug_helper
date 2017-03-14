@@ -42,13 +42,15 @@ end
 
 local function convert_table(tbl, tree_level)
 	local result = ""
+	local title_color = "#c0ffc0"
 	local parent_color = "#c0c0ff"
 	local child_color  = "#a0a0a0"
 
 	for k, v in sorted_pairs(tbl) do
 		local line = ""
 		if type(v) == "table" then
-			line = line .. ("%d,%s,%s,"):format(tree_level, parent_color, k)
+			local color = tree_level == 1 and title_color or parent_color
+			line = line .. ("%d,%s,%s,"):format(tree_level, color, k)
 			local sub_tree = convert_table(v, tree_level + 1)
 			line = line .. ("%s%s"):format(#sub_tree ~= 0 and "," or "", sub_tree)
 		else
@@ -119,11 +121,15 @@ local function create_formspec(playername)
 		end
 	end
 
-	-- Item Detail
+	-- Item Detail (ItemStack / Item definition)
 	local stack = invdata[data.sel_idx]
 	local item_detail = ""
 	if stack and stack:get_name() ~= "" then
-		item_detail = convert_table(stack:to_table(), 1)
+		local tbl = {
+			["ItemStack"] = stack:to_table(),
+			["ItemDefinition"] = minetest.registered_items[stack:get_name()]
+		}
+		item_detail = convert_table(tbl, 1)
 	end
 
 	formspec = formspec ..
