@@ -238,7 +238,14 @@ local function get_node_inventory_data(player, pos)
 	local playername = player:get_player_name()
 	local node = minetest.get_node(pos)
 	local meta = minetest.get_meta(pos)
-	local invdef = get_invdef(meta:get_string("formspec"), target_types.NODE, false)
+
+	local formspec = ""
+	if string.match(node.name, "^default:chest") then
+		formspec = string.gsub(default.get_chest_formspec(pos), "nodemeta:[-%d]+,[-%d]+,[-%d]+", "context")
+	else
+		formspec = meta:get_string("formspec")
+	end
+	local invdef = get_invdef(formspec, target_types.NODE, false)
 	local invlist = get_invlist(invdef)
 
 	player_data[playername] = {
@@ -252,7 +259,7 @@ local function get_node_inventory_data(player, pos)
 		inv_list = invlist,
 		inv_def = invdef,
 		inv_data = get_invdata(meta:get_inventory(), invdef),
-		formspec = meta:get_string("formspec")
+		formspec = formspec
 	}
 end
 
