@@ -17,6 +17,16 @@ local formspec_name = "debug_helper:ui_inv_viewer"
 
 local player_data = {}
 
+local disable_combine_pinv = false
+local disable_mod_list = {
+	"unified_inventory"
+}
+for _, modname in ipairs(disable_mod_list) do
+	if minetest.get_modpath(modname) then
+		disable_combine_pinv = true
+	end
+end
+
 
 -------------------------------------------
 ----  Local functions
@@ -88,8 +98,10 @@ local function create_formspec(playername)
 		table.concat(data.inv_list, ",") .. ";" .. list_index .. "]"
 
 	-- Combine Player Inventory Checkbox
-	formspec = formspec .. "checkbox[0.5,1.4;combine_pinv;Combine Player Inventory;" ..
-		tostring(data.combine_pinv) .. "]"
+	if data.type == target_types.PLAYER and disable_combine_pinv == false then
+		formspec = formspec .. "checkbox[0.5,1.4;combine_pinv;Combine Player Inventory;" ..
+			tostring(data.combine_pinv) .. "]"
+	end
 
 	-- Inventory Buttons
 	local height = invdef.height
