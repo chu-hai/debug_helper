@@ -66,7 +66,7 @@ local function mesecon_checker_on_place(itemstack, placer, pointed_thing)
 		end
 	end
 
-	if not minetest.setting_getbool("creative_mode") then
+	if not minetest.settings:get_bool("creative_mode") then
 		itemstack:take_item()
 	end
 	return itemstack
