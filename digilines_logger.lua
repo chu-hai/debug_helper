@@ -15,6 +15,17 @@ local function pos_to_string(pos)
 	return val_to_str(pos.x) .. val_to_str(pos.y) .. val_to_str(pos.z)
 end
 
+local function update_infotext(meta, log_buf)
+	if log_buf then
+		meta:set_string("infotext",
+						"Time : " .. log_buf.time .. "\n" ..
+						"Channel : " .. log_buf.channel .. "\n" ..
+						"Message : " .. string.gsub(dump(log_buf.msg), "\n", ""))
+	else
+		meta:set_string("infotext", "")
+	end
+end
+
 local function add_logdata(pos, channel, msg)
 	local meta = minetest.get_meta(pos)
 	local pos_str = meta:get_string("pos_str")
@@ -27,11 +38,13 @@ local function add_logdata(pos, channel, msg)
 	if #buf >= MAX_LOG_ROW then
 		table.remove(buf, 1)
 	end
-	buf[#buf + 1] = {
+	local idx = #buf + 1
+	buf[idx] = {
 		time = os.date("%H:%M:%S"),
 		channel = channel,
 		msg = msg
 	}
+	update_infotext(meta, buf[idx])
 end
 
 local function create_formspec_main(playername)
@@ -143,6 +156,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		if fields.clear then
 			log_buffer[pos_str] = {}
 			player_data[playername].logcache = {}
+			update_infotext(minetest.get_meta(player_data[playername].pos), nil)
 		end
 		if fields.refresh or fields.clear then
 			if fields.refresh then
@@ -171,6 +185,25 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		return true
 	end
 end)
+
+
+-------------------------------------------
+----  LBM
+-------------------------------------------
+minetest.register_lbm({
+	name = "debug_helper:clear_infotext",
+	nodenames = {
+		"debug_helper:digilines_logger_on",
+		"debug_helper:digilines_logger_off"
+	},
+	run_at_every_load = true,
+	action = function(pos, node)
+		local pos_str = pos_to_string(pos)
+		if not log_buffer[pos_str] then
+			update_infotext(minetest.get_meta(pos), nil)
+		end
+	end
+})
 
 
 -------------------------------------------
